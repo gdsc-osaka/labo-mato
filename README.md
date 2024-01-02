@@ -1,4 +1,27 @@
-# mato-labo / 研究室まとめるくん
+# labo-mato / 研究室まとめるくん
+## Gitルール
+### ブランチ名
+* `main`: メインブランチ. 現行でデプロイされてるコード
+* `dev`: 開発中ブランチ
+* `feat/<user_id>/<issue_id>_<alias>`: 新機能ブランチ. issueで "new feature" がついてるもの 
+  `<user_id>`: GitHubのユーザーId  
+  `<issue_id>`: Issue番号  
+  `<alias>`: Issueの特徴を端的に表した文章  
+  例) `feat/hari/10_login_page`
+* `hotfix/<user_id>/<issue_id>_<alias>`: バグ修正用ブランチ. issueで "bug" がついてるもの
+
+### Commit Message
+先頭に prefix を付ける. 例: `feat: ログインページを追加`  
+prefix の一覧↓
+* feat: 新しい機能
+* fix: バグの修正
+* docs: ドキュメントのみの変更
+* style: 空白、フォーマット、セミコロン追加など
+* refactor: 仕様に影響がないコード改善(リファクタ)
+* perf: パフォーマンス向上関連
+* test: テスト関連
+* chore: ビルド、補助ツール、ライブラリ関連
+
 ## ディレクトリ構成
 <pre>
 ├── next  // Next.jsのディレクトリ
