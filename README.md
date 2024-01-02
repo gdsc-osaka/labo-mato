@@ -3,12 +3,12 @@
 ### ブランチ名
 * `main`: メインブランチ. 現行でデプロイされてるコード
 * `dev`: 開発中ブランチ
-* `feat/<user_id>/<issue_id>_<alias>`: 新機能ブランチ. issueで "new feature" がついてるもの 
+* `feat/<user_id>/<alias>#<issue_id>`: 新機能ブランチ. issueで "new feature" がついてるもの 
   `<user_id>`: GitHubのユーザーId  
   `<issue_id>`: Issue番号  
   `<alias>`: Issueの特徴を端的に表した文章  
-  例) `feat/hari/10_login_page`
-* `hotfix/<user_id>/<issue_id>_<alias>`: バグ修正用ブランチ. issueで "bug" がついてるもの
+  例) `feat/hari/1login_page#10`
+* `hotfix/<user_id>/<alias>#<issue_id>`: バグ修正用ブランチ. issueで "bug" がついてるもの
 
 ### Commit Message
 先頭に prefix を付ける. 例: `feat: ログインページを追加`  
