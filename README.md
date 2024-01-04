@@ -1,4 +1,4 @@
-# labo-mato / 研究室まとめるくん
+# [labo-mato / 研究室まとめるくん](https://labo-mato.pages.dev/)
 ## Gitルール
 ### ブランチ名
 * `main`: メインブランチ. 現行でデプロイされてるコード
@@ -35,7 +35,7 @@ prefix の一覧↓
 * ORM: Prisma
 * ストレージ: Cloudflare R2 (Cloud Storage は無料枠5GB/month, R2は10GB/month)
 * 認証: Firebase Auth + NextAuth
-* Hosting: Vercel or Firebase Hosting
+* Hosting: Cloudflare Hosting
 * CDN: 今は使わない. 使うならCloudflare
 * CI/CD: GitHub Actions
 * テスト: Vitest, MSW(使うか迷う)
