@@ -10,13 +10,15 @@ jobs:
         uses: actions/checkout@v3
 
       - name: setup-node
+        working-directory: ./next
         uses: actions/setup-node@v3
         with:
           node-version: 18
           cache: npm
-          cache-dependency-path: ./next/package-lock.json
+          cache-dependency-path: ./package-lock.json
 
       - name: cache-node-modules
+        working-directory: ./next
         uses: actions/cache@v3
         id: node_modules_cache_id
         env:
@@ -26,10 +28,12 @@ jobs:
           key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
 
       - name: npm-install
+        working-directory: ./next
         if: ${{ steps.node_modules_cache_id.outputs.cache-hit != 'true' }}
         run: npm i
 
       - name: app-test
+        working-directory: ./next
         run: npm run test
 
       - name: discord-notification-success
@@ -38,7 +42,7 @@ jobs:
         with:
           webhook-url: ${{ secrets.DISCORD_WEBHOOK_URL }}
           embed-title: "Success to Build Test :white_check_mark:"
-          embed-description: Branch ${{ github.ref_name }}
+          embed-description: branch - `${{ github.ref_name }}`
           embed-color: 5763719
 
       - name: discord-notification-failure
@@ -46,6 +50,6 @@ jobs:
         uses: tsickert/discord-webhook@v5.3.0
         with:
           webhook-url: ${{ secrets.DISCORD_WEBHOOK_URL }}
-          embed-title: "Failure to Build Test :white_check_mark:"
+          embed-title: "Failure to Build Test :x:"
           embed-description: Branch ${{ github.ref_name }}
           embed-color: 15548997
