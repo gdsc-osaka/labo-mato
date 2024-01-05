@@ -36,8 +36,6 @@ jobs:
       - name: app-test
         working-directory: next
         run: npm run test
-        with:
-          working-directory: next
 
       - name: discord-notification-success
         if: ${{ success() }}
