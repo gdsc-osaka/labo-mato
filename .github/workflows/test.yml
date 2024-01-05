@@ -14,7 +14,8 @@ jobs:
         with:
           node-version: 18
           cache: npm
-          cache-dependency-path: ./frontend/npm.lock
+          cache-dependency-path: ./next/package-lock.lock
+
       - name: cache-node-modules
         uses: actions/cache@v3
         id: node_modules_cache_id
@@ -37,7 +38,7 @@ jobs:
         with:
           webhook-url: ${{ secrets.DISCORD_WEBHOOK_URL }}
           embed-title: "Success to Build Test :white_check_mark:"
-          embed-description: ${{ format('{Branch {0}}', github.ref_name) }}
+          embed-description: Branch ${{ github.ref_name }}
           embed-color: 5763719
 
       - name: discord-notification-failure
@@ -46,5 +47,5 @@ jobs:
         with:
           webhook-url: ${{ secrets.DISCORD_WEBHOOK_URL }}
           embed-title: "Failure to Build Test :white_check_mark:"
-          embed-description: ${{ format('{Branch {0}}', github.ref_name) }}
+          embed-description: Branch ${{ github.ref_name }}
           embed-color: 15548997
