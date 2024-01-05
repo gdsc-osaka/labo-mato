@@ -46,15 +46,27 @@ jobs:
             branch - `${{ github.ref_name }}`\n
             commit - `${{ github.event.head_commit.message }}`
           embed-color: 5763719
+          raw-data: |
+            {
+              "embeds": {
+                "title": "Success to Build Test :white_check_mark:",
+                "description": "${{ github.event.head_commit.message }}\nbranch: `${{ github.ref_name }}`"
+                "url: "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+                "color": 5763719
+              }
+            }
 
       - name: discord-notification-failure
         if: ${{ failure() }}
         uses: tsickert/discord-webhook@v5.3.0
         with:
           webhook-url: ${{ secrets.DISCORD_WEBHOOK_URL }}
-          embed-url: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
-          embed-title: "Failure to Build Test :x:"
-          embed-description:
-            branch - `${{ github.ref_name }}`\n
-            commit - `${{ github.event.head_commit.message }}`
-          embed-color: 15548997
+          raw-data: |
+            {
+              "embeds": {
+                "title": "Failure to Build Test :x:",
+                "description": "${{ github.event.head_commit.message }}\nbranch: `${{ github.ref_name }}`"
+                "url: "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+                "color": 15548997
+              }
+            }
