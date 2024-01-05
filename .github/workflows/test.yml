@@ -12,10 +12,9 @@ jobs:
       - name: setup-node
         uses: actions/setup-node@v3
         with:
-          working-directory: ./next
           node-version: 18
           cache: npm
-          cache-dependency-path: ./package-lock.json
+          cache-dependency-path: ./next/package-lock.json
 
       - name: cache-node-modules
         uses: actions/cache@v3
@@ -44,8 +43,8 @@ jobs:
           embed-url: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
           embed-title: "Success to Build Test :white_check_mark:"
           embed-description:
-            branch - `${{ github.ref_name }}`
-            commit - ${{ github.event.head_commit.message }}
+            branch - `${{ github.ref_name }}`\n
+            commit - `${{ github.event.head_commit.message }}`
           embed-color: 5763719
 
       - name: discord-notification-failure
@@ -56,6 +55,6 @@ jobs:
           embed-url: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
           embed-title: "Failure to Build Test :x:"
           embed-description:
-            branch - `${{ github.ref_name }}`
-            commit - ${{ github.event.head_commit.message }}
+            branch - `${{ github.ref_name }}`\n
+            commit - `${{ github.event.head_commit.message }}`
           embed-color: 15548997
