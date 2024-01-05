@@ -5,12 +5,14 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: next
     steps:
       - name: checkout
         uses: actions/checkout@v3
 
       - name: setup-node
-        working-directory: ./next
         uses: actions/setup-node@v3
         with:
           node-version: 18
@@ -18,7 +20,6 @@ jobs:
           cache-dependency-path: ./package-lock.json
 
       - name: cache-node-modules
-        working-directory: ./next
         uses: actions/cache@v3
         id: node_modules_cache_id
         env:
@@ -28,12 +29,10 @@ jobs:
           key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
 
       - name: npm-install
-        working-directory: ./next
         if: ${{ steps.node_modules_cache_id.outputs.cache-hit != 'true' }}
         run: npm i
 
       - name: app-test
-        working-directory: ./next
         run: npm run test
 
       - name: discord-notification-success
