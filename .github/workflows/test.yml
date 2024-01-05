@@ -12,9 +12,9 @@ jobs:
       - name: setup-node
         uses: actions/setup-node@v3
         with:
+          working-directory: next
           node-version: 18
           cache: npm
-          working-directory: next
           cache-dependency-path: ./package-lock.json
 
       - name: cache-node-modules
@@ -22,27 +22,33 @@ jobs:
         id: node_modules_cache_id
         env:
           cache-name: cache-node-modules
-        working-directory: next
         with:
+          working-directory: next
           path: '**/node_modules'
           key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
 
       - name: npm-install
         if: ${{ steps.node_modules_cache_id.outputs.cache-hit != 'true' }}
-        working-directory: next
         run: npm i
+        with:
+          working-directory: next
 
       - name: app-test
         working-directory: next
         run: npm run test
+        with:
+          working-directory: next
 
       - name: discord-notification-success
         if: ${{ success() }}
         uses: tsickert/discord-webhook@v5.3.0
         with:
           webhook-url: ${{ secrets.DISCORD_WEBHOOK_URL }}
+          embed-url: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
           embed-title: "Success to Build Test :white_check_mark:"
-          embed-description: branch - `${{ github.ref_name }}`
+          embed-description:
+            branch - `${{ github.ref_name }}`
+            commit - ${{ github.event.head_commit.message }}
           embed-color: 5763719
 
       - name: discord-notification-failure
@@ -50,6 +56,9 @@ jobs:
         uses: tsickert/discord-webhook@v5.3.0
         with:
           webhook-url: ${{ secrets.DISCORD_WEBHOOK_URL }}
+          embed-url: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
           embed-title: "Failure to Build Test :x:"
-          embed-description: Branch ${{ github.ref_name }}
+          embed-description:
+            branch - `${{ github.ref_name }}`
+            commit - ${{ github.event.head_commit.message }}
           embed-color: 15548997
