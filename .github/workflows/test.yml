@@ -37,15 +37,9 @@ jobs:
 
       - name: discord-notification-success
         if: ${{ success() }}
-        uses: tsickert/discord-webhook@v5.3.0
+        uses: tyrrrz/action-http-request@master
         with:
-          webhook-url: ${{ secrets.DISCORD_WEBHOOK_URL }}
-          embed-url: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
-          embed-title: "Success to Build Test :white_check_mark:"
-          embed-description:
-            branch - `${{ github.ref_name }}`\n
-            commit - `${{ github.event.head_commit.message }}`
-          embed-color: 5763719
+          url: ${{ secrets.DISCORD_WEBHOOK_URL }}
           raw-data: |
             {
               "embeds": {
@@ -58,9 +52,9 @@ jobs:
 
       - name: discord-notification-failure
         if: ${{ failure() }}
-        uses: tsickert/discord-webhook@v5.3.0
+        uses: tyrrrz/action-http-request@master
         with:
-          webhook-url: ${{ secrets.DISCORD_WEBHOOK_URL }}
+          url: ${{ secrets.DISCORD_WEBHOOK_URL }}
           raw-data: |
             {
               "embeds": {
