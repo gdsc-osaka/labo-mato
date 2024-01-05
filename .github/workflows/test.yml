@@ -12,7 +12,7 @@ jobs:
       - name: setup-node
         uses: actions/setup-node@v3
         with:
-          working-directory: next
+          working-directory: ./next
           node-version: 18
           cache: npm
           cache-dependency-path: ./package-lock.json
@@ -23,18 +23,17 @@ jobs:
         env:
           cache-name: cache-node-modules
         with:
-          working-directory: next
+          working-directory: ./next
           path: '**/node_modules'
           key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
 
       - name: npm-install
         if: ${{ steps.node_modules_cache_id.outputs.cache-hit != 'true' }}
         run: npm i
-        with:
-          working-directory: next
+        working-directory: ./next
 
       - name: app-test
-        working-directory: next
+        working-directory: ./next
         run: npm run test
 
       - name: discord-notification-success
