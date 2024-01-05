@@ -4,8 +4,6 @@ on:
     branches:
       - main
       - dev
-env:
-  DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK_URL }}
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -39,12 +37,12 @@ jobs:
         if: ${{ success() }}
         uses: tsickert/discord-webhook@v5.3.0
         with:
-          webhook-url: ${{ DISCORD_WEBHOOK }}
+          webhook-url: ${{ secrets.DISCORD_WEBHOOK_URL }}
           content: "Success to Build Test :white_check_mark:"
 
       - name: discord-notification-failure
         if: ${{ failure() }}
         uses: tsickert/discord-webhook@v5.3.0
         with:
-          webhook-url: ${{ DISCORD_WEBHOOK }}
+          webhook-url: ${{ secrets.DISCORD_WEBHOOK_URL }}
           content: "Success to Build Test :x:"
