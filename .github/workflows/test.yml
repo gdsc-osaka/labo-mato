@@ -46,12 +46,11 @@ jobs:
           retry-count: 3
           retry-delay: 500
           body: |
-            {
-              "embeds": {
-                "title": "Success to Build Test :white_check_mark:",
-                "description": "${{ github.event.head_commit.message }}\nbranch: `${{ github.ref_name }}`",
-                "url: "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}",
-                "color": 5763719
+            {embeds: {
+                title: Success to Build Test :white_check_mark:,
+                description: ${{ github.event.head_commit.message }}\nbranch: `${{ github.ref_name }}`,
+                url: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }},
+                color: 5763719
               }
             }
 
@@ -67,10 +66,10 @@ jobs:
           retry-delay: 500
           body: |
             {
-              "embeds": {
-                "title": "Failure to Build Test :x:",
-                "description": "${{ github.event.head_commit.message }}\nbranch: `${{ github.ref_name }}`"
-                "url: "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
-                "color": 15548997
+              embeds: {
+                title: Failure to Build Test :x:,
+                description: ${{ github.event.head_commit.message }}\nbranch: `${{ github.ref_name }}`
+                url: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+                color: 15548997
               }
             }
