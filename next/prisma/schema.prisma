@@ -63,12 +63,15 @@ model Laboratory {
   websiteUrl   String
   email        String
   telNumber    String
+  prefecture   Prefecture         @relation(fields: [prefectureId], references: [id])
+  prefectureId Int
   createdAt    DateTime           @default(now())
   updatedAt    DateTime           @updatedAt
   scholars     Scholar[]
 
   @@index([univId])
   @@index([disciplineId])
+  @@index([prefectureId])
 }
 
 model Scholar {
@@ -85,4 +88,22 @@ model Scholar {
   updatedAt       DateTime   @updatedAt
 
   @@index([laboId])
+}
+
+/// 地方
+model Region {
+  id          Int          @id @default(autoincrement())
+  name        String
+  prefectures Prefecture[]
+}
+
+/// 都道府県
+model Prefecture {
+  id         Int          @id @default(autoincrement())
+  name       String
+  region     Region       @relation(fields: [regionId], references: [id])
+  regionId   Int
+  Laboratory Laboratory[]
+
+  @@index([regionId])
 }
