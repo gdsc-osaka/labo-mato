@@ -38,6 +38,8 @@ model AcademicDiscipline {
   id           Int          @id @default(autoincrement())
   name         String
   type         ScienceType
+  createdAt    DateTime     @default(now())
+  updatedAt    DateTime     @updatedAt
   laboratories Laboratory[]
 }
 
