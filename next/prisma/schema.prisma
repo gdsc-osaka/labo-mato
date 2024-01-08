@@ -11,12 +11,6 @@ generator client {
   provider = "prisma-client-js"
 }
 
-model User {
-  id        Int      @id @default(autoincrement())
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-}
-
 model University {
   id           Int             @id @default(autoincrement())
   name         String
@@ -52,7 +46,7 @@ enum ScienceType {
 }
 
 model Laboratory {
-  id           Int                @id @default(autoincrement())
+  id           String             @id @default(uuid())
   university   University         @relation(fields: [univId], references: [id])
   univId       Int
   discipline   AcademicDiscipline @relation(fields: [disciplineId], references: [id])
@@ -63,8 +57,7 @@ model Laboratory {
   websiteUrl   String
   email        String
   telNumber    String
-  prefecture   Prefecture         @relation(fields: [prefectureId], references: [id])
-  prefectureId Int
+  prefectureId Int                // 1~47の数字. 別途APIを作成して管理する
   createdAt    DateTime           @default(now())
   updatedAt    DateTime           @updatedAt
   scholars     Scholar[]
@@ -77,7 +70,7 @@ model Laboratory {
 model Scholar {
   id              Int        @id @default(autoincrement())
   laboratory      Laboratory @relation(fields: [laboId], references: [id])
-  laboId          Int
+  laboId          String
   name            String
   role            String
   email           String     @unique
@@ -88,22 +81,4 @@ model Scholar {
   updatedAt       DateTime   @updatedAt
 
   @@index([laboId])
-}
-
-/// 地方
-model Region {
-  id          Int          @id @default(autoincrement())
-  name        String
-  prefectures Prefecture[]
-}
-
-/// 都道府県
-model Prefecture {
-  id         Int          @id @default(autoincrement())
-  name       String
-  region     Region       @relation(fields: [regionId], references: [id])
-  regionId   Int
-  Laboratory Laboratory[]
-
-  @@index([regionId])
 }
