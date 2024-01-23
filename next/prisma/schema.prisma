@@ -1,0 +1,84 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+datasource db {
+  provider     = "mysql"
+  url          = env("DATABASE_URL")
+  relationMode = "prisma"
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model University {
+  id           Int             @id @default(autoincrement())
+  name         String
+  createdAt    DateTime        @default(now())
+  updatedAt    DateTime        @updatedAt
+  laboratories Laboratory[]
+  type         InstitutionType
+}
+
+/// 国立、公立、私立など
+enum InstitutionType {
+  NATIONAL
+  PRIVATE
+  PUBLIC
+}
+
+// 学問分野
+model AcademicDiscipline {
+  id           Int          @id @default(autoincrement())
+  name         String
+  type         ScienceType
+  createdAt    DateTime     @default(now())
+  updatedAt    DateTime     @updatedAt
+  laboratories Laboratory[]
+}
+
+enum ScienceType {
+  SOCIAL // 社会科学
+  NATURAL // 自然科学
+  FORMAL // 形式科学
+  HUMANITIES // 人文科学
+  APPLIED // 応用科学
+}
+
+model Laboratory {
+  id           String             @id @default(uuid())
+  university   University         @relation(fields: [univId], references: [id])
+  univId       Int
+  discipline   AcademicDiscipline @relation(fields: [disciplineId], references: [id])
+  disciplineId Int
+  name         String
+  course       String
+  major        String
+  websiteUrl   String
+  email        String
+  telNumber    String
+  prefectureId Int                // 1~47の数字. 別途APIを作成して管理する
+  createdAt    DateTime           @default(now())
+  updatedAt    DateTime           @updatedAt
+  scholars     Scholar[]
+
+  @@index([univId])
+  @@index([disciplineId])
+  @@index([prefectureId])
+}
+
+model Scholar {
+  id              Int        @id @default(autoincrement())
+  laboratory      Laboratory @relation(fields: [laboId], references: [id])
+  laboId          String
+  name            String
+  role            String
+  email           String     @unique
+  telNumber       String
+  iconUri         String
+  googleScholarId String     @unique
+  createdAt       DateTime   @default(now())
+  updatedAt       DateTime   @updatedAt
+
+  @@index([laboId])
+}
