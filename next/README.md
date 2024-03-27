@@ -9,3 +9,9 @@ bun dev
 ```bash
 npx prisma db push
 ```
+
+## 画面設計
+### /
+### /login
+### /labo/[laboid]
+* a
