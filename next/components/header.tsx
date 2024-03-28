@@ -10,7 +10,8 @@ export default async function Header() {
     const user = session?.user;
 
     return (
-        <header className={'w-full px-6 py-3 flex flex-row items-center justify-between'}>
+        <header className={'w-full px-6 py-3 flex flex-row items-center justify-between ' +
+            'border-b border-outline'}>
             <Link href={'/'}>
                 <Image src={'/logo.svg'} alt={'labomato-logo'} width={81.5 * 1.5} height={22 * 1.5}/>
             </Link>

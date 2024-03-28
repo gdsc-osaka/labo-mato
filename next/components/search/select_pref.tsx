@@ -12,13 +12,14 @@ import {prefUtils} from "@/lib/prefecture_utils";
 import {Label} from "@/components/ui/label";
 import React from "react";
 
-export default function SelectPrefecture({name}: {
+export default function SelectPrefecture({name, defaultValue}: {
     name: string
+    defaultValue?: string
 }) {
     return (
         <div>
             <Label htmlFor={"pref-search"}>都道府県で検索</Label>
-            <Select name={name}>
+            <Select name={name} defaultValue={defaultValue}>
                 <SelectTrigger className="">
                     <SelectValue placeholder="都道府県で検索" />
                 </SelectTrigger>

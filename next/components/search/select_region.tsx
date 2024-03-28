@@ -10,13 +10,14 @@ import {
 } from "@/components/ui/select";
 import {prefUtils} from "@/lib/prefecture_utils";
 
-export default function SelectRegion({name}: {
-    name: string
+export default function SelectRegion({name, defaultValue}: {
+    name: string,
+    defaultValue?: string
 }) {
     return (
         <div>
             <Label htmlFor={"region-search"}>地方名で検索</Label>
-            <Select name={name}>
+            <Select name={name} defaultValue={defaultValue}>
                 <SelectTrigger className="">
                     <SelectValue placeholder="地方名で検索" />
                 </SelectTrigger>

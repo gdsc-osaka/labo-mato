@@ -35,8 +35,8 @@ export default function ReSearchForm({defaultValue}: {
                    label={<Label htmlFor={'free-word-search'}>フリーワード検索</Label>}/>
             <Input placeholder={'学問分野で検索'} name={'discipline'}
                    label={<Label htmlFor={'discipline-search'}>学問分野で検索</Label>}/>
-            <SelectRegion name={'region'}/>
-            <SelectPrefecture name={'prefecture'}/>
+            <SelectRegion name={'region'} defaultValue={defaultValue.region}/>
+            <SelectPrefecture name={'prefecture'} defaultValue={defaultValue.pref}/>
             <div className={'flex flex-row justify-end'}>
                 <button type={'submit'}>
                     再検索
