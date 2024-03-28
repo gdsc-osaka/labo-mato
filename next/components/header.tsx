@@ -3,7 +3,7 @@ import {getServerSession} from "next-auth/next";
 import {authOptions} from "@/options";
 import {redirect} from "next/navigation";
 import Link from "next/link";
-import {Button} from "@/components/button";
+import {Button} from "@/components/ui/button";
 
 export default async function Header() {
     const session = await getServerSession(authOptions);

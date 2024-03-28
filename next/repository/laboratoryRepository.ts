@@ -1,12 +1,13 @@
 import {prisma} from "@/repository/prisma";
-import {Laboratory} from "@/domain/types";
+import {Laboratory, RawLaboratory} from "@/domain/types";
 
 type Query = {
     keyword?: string;
 }
 
 interface ILaboratoryRepository {
-    findMany(query: Query): Promise<Laboratory[]>
+    findMany(query: Query): Promise<Laboratory[]>;
+    create(laboratory: Omit<RawLaboratory, "id" | "createdAt" | "updatedAt">): Promise<RawLaboratory>;
 }
 
 export class LaboratoryRepository implements ILaboratoryRepository {
@@ -45,6 +46,17 @@ export class LaboratoryRepository implements ILaboratoryRepository {
             });
 
             return results;
+        } catch (e) {
+            console.error(e);
+            return Promise.reject(e);
+        }
+    }
+
+    async create(laboratory: Omit<RawLaboratory, "id" | "createdAt" | "updatedAt">) {
+        try {
+            return await prisma.laboratory.create({
+                data: laboratory
+            });
         } catch (e) {
             console.error(e);
             return Promise.reject(e);

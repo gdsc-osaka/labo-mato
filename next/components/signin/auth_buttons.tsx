@@ -2,7 +2,7 @@
 
 import {signIn, signOut} from "next-auth/react";
 import Image from "next/image";
-import {Button} from "@/components/button";
+import {Button} from "@/components/ui/button";
 
 export const GoogleLoginButton = () => {
     return (

@@ -9,3 +9,5 @@ export type University = Prisma.UniversityGetPayload<{}>;
 export type Laboratory = Prisma.LaboratoryGetPayload<{
     include: {university: true, discipline: true}
 }>
+
+export type RawLaboratory = Prisma.LaboratoryGetPayload<{}>;

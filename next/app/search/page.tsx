@@ -1,10 +1,7 @@
 import {z} from 'zod'
 import {LaboCard} from "@/components/search/labo_card";
-import {Laboratory, University} from "@/domain/types";
-
-type SearchParams = {
-    q: string
-}
+import {Laboratory} from "@/domain/types";
+import ReSearchForm from "@/components/search/re_search_form";
 
 const laboratoryDecoder = z.custom<Laboratory>();
 const laboratoriesDecoder = z.array(laboratoryDecoder);
@@ -28,12 +25,22 @@ const searchLaboratories = async (searchParams: SearchParams): Promise<Laborator
     }
 }
 
+export type SearchParams = {
+    q?: string,
+    pref?: string,
+    region?: string,
+    dis?: string,
+}
 
 export default async function SearchPage({searchParams}: {searchParams: SearchParams}) {
     const labos = await searchLaboratories(searchParams);
 
     return (
-        <main className={'px-12 py-6'}>
+        <main className={'px-12 py-6 flex flex-row gap-8'}>
+            <aside className={'bg-card flex flex-col gap-4 p-4'}>
+                <p>詳細検索</p>
+                <ReSearchForm defaultValue={searchParams}/>
+            </aside>
             <div className={'grid grid-cols-4 gap-4'}>
                 {labos.map(labo => <LaboCard key={labo.id} labo={labo}/>)}
             </div>

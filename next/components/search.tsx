@@ -1,6 +1,6 @@
 'use client';
 
-import {Input} from "@/components/input";
+import {Input} from "@/components/ui/input";
 import {FormEvent} from "react";
 import {useRouter} from "next/navigation";
 
