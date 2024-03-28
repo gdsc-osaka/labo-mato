@@ -1,10 +1,10 @@
 import type {Metadata} from 'next'
-import {Inter} from 'next/font/google'
+import {Noto_Sans_JP} from 'next/font/google'
 import './globals.css'
 import {KumaRegistry} from "@kuma-ui/next-plugin/registry";
 import Header from "@/components/header";
 
-const inter = Inter({subsets: ['latin']})
+const notoSansJP = Noto_Sans_JP({subsets: ['latin']})
 
 // Cloudflare Pages使う場合はruntimeをedge
 export const runtime = 'nodejs' // process.env.ENV === "release" ? 'edge' : 'nodejs';
@@ -24,7 +24,7 @@ export default async function RootLayout({children}: {
     // const session = await getServerSession(authOptions);
     return (
         <html lang="en">
-        <body className={inter.className}>
+        <body className={notoSansJP.className}>
         <Header/>
         <KumaRegistry>
             {children}

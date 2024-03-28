@@ -1,5 +1,5 @@
 import {getServerSession} from "next-auth/next";
-import {GoogleLoginButton} from "@/components/auth_buttons";
+import {GoogleLoginButton} from "@/components/signin/auth_buttons";
 import {authOptions} from "@/options";
 import Image from "next/image";
 import {redirect} from "next/navigation";

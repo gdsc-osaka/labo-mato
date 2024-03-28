@@ -4,6 +4,7 @@
 datasource db {
   provider     = "postgresql"
   url          = env("DATABASE_URL")
+  directUrl    = env("DIRECT_URL")
   relationMode = "prisma"
 }
 
@@ -17,7 +18,7 @@ model University {
   createdAt    DateTime        @default(now())
   updatedAt    DateTime        @updatedAt
   laboratories Laboratory[]
-  type         InstitutionType
+  institution  InstitutionType
 }
 
 /// 国立、公立、私立など
@@ -45,13 +46,20 @@ enum ScienceType {
   APPLIED // 応用科学
 }
 
+enum LaboType {
+  DEFAULT // 普通の講座
+  COOPORATIVE // 協力講座
+  AFFILIATED // 連携講座
+}
+
 model Laboratory {
   id           String             @id @default(uuid())
   university   University         @relation(fields: [univId], references: [id])
   univId       Int
-  discipline   AcademicDiscipline @relation(fields: [disciplineId], references: [id])
+  discipline   AcademicDiscipline @relation(fields: [disciplineId], references: [id]) //
   disciplineId Int
-  name         String
+  name         String // ~~~~講座
+  seminarName  String // ~~~~研究室
   course       String
   major        String
   websiteUrl   String
@@ -59,6 +67,7 @@ model Laboratory {
   telNumber    String
   paperSummary String // 論文の要約
   prefectureId Int // 1~47の数字. 別途APIを作成して管理する
+  laboType     LaboType
   createdAt    DateTime           @default(now())
   updatedAt    DateTime           @updatedAt
   scholars     Scholar[]

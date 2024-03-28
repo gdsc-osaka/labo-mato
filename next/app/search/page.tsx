@@ -1,29 +1,15 @@
-import {array, Decoder, number, object, string} from "@mojotech/json-type-validation";
-import {Laboratory} from "@prisma/client";
-import {LaboCard} from "@/components/laboratory";
+import {z} from 'zod'
+import {LaboCard} from "@/components/search/labo_card";
+import {Laboratory, University} from "@/domain/types";
 
 type SearchParams = {
     q: string
 }
 
-const laboratoryDecoder: Decoder<Laboratory> = object({
-    id: string(),
-    univId: number(),
-    disciplineId: number(),
-    name: string(),
-    course: string(),
-    major: string(),
-    websiteUrl: string(),
-    email: string(),
-    telNumber: string(),
-    paperSummary: string(),
-    prefectureId: number(),
-    createdAt: number().map((x) => new Date(x)),
-    updatedAt: number().map((x) => new Date(x)),
-});
-const laboratoriesDecoder: Decoder<Laboratory[]> = array(laboratoryDecoder);
+const laboratoryDecoder = z.custom<Laboratory>();
+const laboratoriesDecoder = z.array(laboratoryDecoder);
 
-const searchLabos = async (searchParams: SearchParams): Promise<Laboratory[]> => {
+const searchLaboratories = async (searchParams: SearchParams): Promise<Laboratory[]> => {
     const params = new URLSearchParams(searchParams);
     const res = await fetch(process.env.URL + `/api/labos?${params.toString()}`, {
         method: 'GET',
@@ -35,7 +21,7 @@ const searchLabos = async (searchParams: SearchParams): Promise<Laboratory[]> =>
     const json = await res.json();
 
     try {
-        return laboratoriesDecoder.runPromise(json);
+        return laboratoriesDecoder.parse(json);
     } catch (e) {
         console.error(e);
         return [];
@@ -44,13 +30,13 @@ const searchLabos = async (searchParams: SearchParams): Promise<Laboratory[]> =>
 
 
 export default async function SearchPage({searchParams}: {searchParams: SearchParams}) {
-    const {q} = searchParams;
-
-    const labos = await searchLabos(searchParams);
+    const labos = await searchLaboratories(searchParams);
 
     return (
-        <main className={'p-12'}>
-            {labos.map(labo => <LaboCard labo={labo}/>)}
+        <main className={'px-12 py-6'}>
+            <div className={'grid grid-cols-4 gap-4'}>
+                {labos.map(labo => <LaboCard key={labo.id} labo={labo}/>)}
+            </div>
         </main>
     );
 }
